@@ -6,7 +6,7 @@ defmodule Servy.Handler do
     |> log
     |> route
     |> track
-    |> emojify
+    # |> emojify
     |> format_response
   end
 
@@ -63,6 +63,10 @@ defmodule Servy.Handler do
 
   def route(%{method: "DELETE", path: "/bears" <> _id} = conv) do
     %{conv | status: 403, resp_body: "You can't delete a bear!"}
+  end
+
+  def route(%{method: "GET", path: "/about"} = conv) do
+    %{conv | status: 200, resp_body: "contents of file"}
   end
 
   def route(%{path: path} = conv) do
@@ -153,6 +157,18 @@ IO.puts(response)
 
 request = """
 GET /bears?id=1 HTTP/1.1
+Host: example.com
+User-Agent: ExampleBrowser/1.0
+Accept: */*
+
+"""
+
+response = Servy.Handler.handle(request)
+
+IO.puts(response)
+
+request = """
+GET /about HTTP/1.1
 Host: example.com
 User-Agent: ExampleBrowser/1.0
 Accept: */*
