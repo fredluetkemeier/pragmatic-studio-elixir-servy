@@ -6,8 +6,15 @@ defmodule Servy.Handler do
     |> log
     |> route
     |> track
+    |> emojify
     |> format_response
   end
+
+  def emojify(%{status: 200} = conv) do
+    %{conv | resp_body: "✅ " <> conv.resp_body <> " ✅"}
+  end
+
+  def emojify(conv), do: conv
 
   def track(%{status: 404, path: path} = conv) do
     IO.puts("Warning: #{path} is on the loose!")
