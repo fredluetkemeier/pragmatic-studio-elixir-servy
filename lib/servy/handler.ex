@@ -64,17 +64,24 @@ defmodule Servy.Handler do
     |> handle_file(conv)
   end
 
-  def route(%{method: "GET", path: "/bears" <> id} = conv) do
+  def route(%{method: "GET", path: "/bears/" <> id} = conv) do
     %{conv | status: 200, resp_body: "Bear #{id}"}
   end
 
-  def route(%{method: "DELETE", path: "/bears" <> _id} = conv) do
+  def route(%{method: "DELETE", path: "/bears/" <> _id} = conv) do
     %{conv | status: 403, resp_body: "You can't delete a bear!"}
   end
 
   def route(%{method: "GET", path: "/about"} = conv) do
     Path.expand("../../pages", __DIR__)
     |> Path.join("about.html")
+    |> File.read()
+    |> handle_file(conv)
+  end
+
+  def route(%{method: "GET", path: "/pages/" <> page} = conv) do
+    Path.expand("../../pages", __DIR__)
+    |> Path.join(page <> ".html")
     |> File.read()
     |> handle_file(conv)
   end
