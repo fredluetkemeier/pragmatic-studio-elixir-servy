@@ -1,4 +1,4 @@
-defmodule FileHandler do
+defmodule Servy.FileHandler do
   def handle_file({:ok, content}, conv) do
     %{conv | status: 200, resp_body: content}
   end
