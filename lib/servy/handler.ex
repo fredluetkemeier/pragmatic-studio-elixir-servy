@@ -14,19 +14,8 @@ defmodule Servy.Handler do
     |> log
     |> route
     |> track
-    # |> emojify
     |> format_response
   end
-
-  def emojify(%{status: 200} = conv) do
-    %{conv | resp_body: "✅ " <> conv.resp_body <> " ✅"}
-  end
-
-  def emojify(conv), do: conv
-
-  # def route(conv) do
-  #   route(conv, conv.method, conv.path)
-  # end
 
   def route(%{method: "GET", path: "/wildthings"} = conv) do
     %{conv | status: 200, resp_body: "Bears, Lions, Tigers"}
