@@ -3,5 +3,3 @@ defmodule Servy do
     "Howdy, #{name}!"
   end
 end
-
-# IO.puts(Servy.hello("Elixir"))
