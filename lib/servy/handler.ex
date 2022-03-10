@@ -18,6 +18,7 @@ defmodule Servy.Handler do
     |> log
     |> route
     |> track
+    |> put_content_length
     |> format_response
   end
 
@@ -75,10 +76,16 @@ defmodule Servy.Handler do
   def format_response(%Conv{} = conv) do
     """
     HTTP/1.1 #{Conv.full_status(conv)}\r
-    Content-Type: #{conv.resp_content_type}\r
-    Content-Length: #{String.length(conv.resp_body)}\r
+    Content-Type: #{Map.get(conv.resp_headers, "Content-Type")}\r
+    Content-Length: #{Map.get(conv.resp_headers, "Content-Length")}\r
     \r
     #{conv.resp_body}
     """
+  end
+
+  def put_content_length(conv) do
+    headers = Map.put(conv, "Content-Length", String.length(conv.resp_body))
+
+    %{conv | resp_headers = headers}
   end
 end
