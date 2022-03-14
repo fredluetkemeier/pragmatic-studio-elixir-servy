@@ -84,8 +84,8 @@ defmodule Servy.Handler do
   end
 
   def put_content_length(conv) do
-    headers = Map.put(conv, "Content-Length", String.length(conv.resp_body))
+    headers = Map.put(conv.resp_headers, "Content-Length", String.length(conv.resp_body))
 
-    %{conv | resp_headers = headers}
+    %{conv | resp_headers: headers}
   end
 end

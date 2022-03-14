@@ -21,7 +21,7 @@ defmodule Servy.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:poison, "~> 5.0"}
+      {:poison, "~> 4.0"}
     ]
   end
 end
